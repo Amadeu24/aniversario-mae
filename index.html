@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Aniversário Mãe 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --rose: #e8a0a0;
+      --cream: #fdf6ef;
+      --deep: #2a1a0e;
+      --blush: #f5d9cc;
+      --warm: #b07d5a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--deep);
+      overflow-x: hidden;
+    }
+
+    /* ── PARTICLES ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: .8; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(160deg, #fff8f0 0%, #fde8d5 40%, #f5cdb8 100%);
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,168,76,.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(232,160,160,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .crown {
+      font-size: clamp(2rem, 6vw, 4rem);
+      animation: pulse 2s ease-in-out infinite;
+      margin-bottom: .5rem;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+    .subtitle-top {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(.9rem, 2.5vw, 1.2rem);
+      color: var(--warm);
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      position: relative; z-index: 2;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--deep);
+      position: relative; z-index: 2;
+      margin: .5rem 0;
+      opacity: 0;
+      animation: fadeUp .9s .4s forwards;
+    }
+    h1 span { color: var(--gold); }
+
+    .divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.2rem auto;
+      position: relative; z-index: 2;
+      opacity: 0;
+      animation: fadeUp .8s .6s forwards;
+    }
+
+    .subtitle-msg {
+      font-style: italic;
+      font-size: clamp(1rem, 2.8vw, 1.4rem);
+      color: var(--warm);
+      max-width: 500px;
+      line-height: 1.6;
+      position: relative; z-index: 2;
+      opacity: 0;
+      animation: fadeUp .8s .8s forwards;
+    }
+
+    /* ── PHOTO FRAME ── */
+    .frame-wrap {
+      position: relative; z-index: 2;
+      margin: 2.5rem auto 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards;
+    }
+    .frame-outer {
+      border: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 10px;
+      background: linear-gradient(135deg, #fff8f0, #fde8d5);
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,.3),
+        0 20px 60px rgba(42,26,14,.2),
+        inset 0 0 30px rgba(201,168,76,.08);
+      display: inline-block;
+    }
+    .frame-inner {
+      border: 1px solid rgba(201,168,76,.4);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .frame-inner img {
+      display: block;
+      width: min(340px, 85vw);
+      height: auto;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .frame-outer:hover .frame-inner img { transform: scale(1.02); }
+
+    .corner {
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: var(--gold);
+      border-style: solid;
+    }
+    .corner.tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; }
+    .corner.tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; }
+    .corner.bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; }
+    .corner.br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; }
+
+    /* ── MUSIC PLAYER ── */
+    .player-wrap {
+      position: relative; z-index: 2;
+      width: min(360px, 90vw);
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: fadeUp .8s 1.2s forwards;
+    }
+    .player {
+      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(253,230,213,.7));
+      border: 1px solid rgba(201,168,76,.4);
+      border-radius: 60px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 8px 32px rgba(201,168,76,.15), 0 2px 8px rgba(42,26,14,.1);
+      backdrop-filter: blur(10px);
+    }
+    .play-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: linear-gradient(135deg, var(--gold), #a07828);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 15px rgba(201,168,76,.4);
+    }
+    .play-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(201,168,76,.5); }
+    .player-info { flex: 1; min-width: 0; }
+    .track-name {
+      font-family: 'Playfair Display', serif;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--deep);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .track-sub {
+      font-size: .75rem;
+      color: var(--warm);
+      font-style: italic;
+    }
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 20px;
+    }
+    .waveform span {
+      display: block;
+      width: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      opacity: .5;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .waveform span:nth-child(1) { height: 8px;  animation-delay: 0s; }
+    .waveform span:nth-child(2) { height: 14px; animation-delay: .1s; }
+    .waveform span:nth-child(3) { height: 20px; animation-delay: .2s; }
+    .waveform span:nth-child(4) { height: 14px; animation-delay: .3s; }
+    .waveform span:nth-child(5) { height: 8px;  animation-delay: .4s; }
+    .waveform.paused span { animation-play-state: paused; }
+    @keyframes wave {
+      0%,100% { transform: scaleY(1); }
+      50%      { transform: scaleY(.4); }
+    }
+
+    /* ── MESSAGE CARD ── */
+    .message-section {
+      position: relative; z-index: 1;
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, var(--blush) 0%, #fff8f2 100%);
+      text-align: center;
+    }
+    .msg-label {
+      font-size: .85rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .msg-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 40px rgba(42,26,14,.08);
+      position: relative;
+    }
+    .msg-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,.12);
+      position: absolute;
+      top: -1.5rem; left: 1rem;
+      line-height: 1;
+    }
+    .msg-text {
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      line-height: 1.8;
+      color: var(--deep);
+    }
+    .msg-sign {
+      margin-top: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--warm);
+    }
+
+    /* ── QR SECTION ── */
+    .qr-section {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: var(--deep);
+      position: relative; z-index: 1;
+    }
+    .qr-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .qr-section p {
+      color: rgba(255,255,255,.6);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    #qrcode {
+      display: inline-block;
+      background: white;
+      padding: 14px;
+      border-radius: 8px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 40px rgba(201,168,76,.3);
+    }
+    #qrcode img, #qrcode canvas { display: block; border-radius: 4px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--deep);
+      color: rgba(255,255,255,.35);
+      font-size: .8rem;
+      font-style: italic;
+      border-top: 1px solid rgba(201,168,76,.2);
+      position: relative; z-index: 1;
+    }
+
+    /* ── UTILITIES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div id="particles"></div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="crown">👑</div>
+  <p class="subtitle-top">uma homenagem especial</p>
+  <h1>Feliz<br><span>Aniversário</span><br>Mãe</h1>
+  <div class="divider"></div>
+  <p class="subtitle-msg">Hoje o universo inteiro celebra<br>a mulher mais especial da nossa vida</p>
+
+  <!-- Photo Frame -->
+  <div class="frame-wrap">
+    <div class="frame-outer">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="frame-inner">
+        <img src="foto.jpg" alt="Nossa família" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Music Player -->
+  <div class="player-wrap">
+    <div class="player">
+      <button class="play-btn" id="playBtn" aria-label="Reproduzir música">▶</button>
+      <div class="player-info">
+        <div class="track-name">🎵 Música Especial</div>
+        <div class="track-sub">Para você, Mãe</div>
+      </div>
+      <div class="waveform paused" id="waveform">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <audio id="audio" loop preload="auto">
+      <source src="musica.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+</section>
+
+<!-- ═══════════ MESSAGE ═══════════ -->
+<section class="message-section">
+  <p class="msg-label">Com todo amor</p>
+  <div class="msg-card">
+    <p class="msg-text">
+      Mãe, você é a razão dos nossos sorrisos,<br>
+      o abrigo nos dias difíceis e a alegria nos dias felizes.<br>
+      Cada abraço seu vale mais do que qualquer palavra.<br><br>
+      Que este dia seja tão especial quanto você é para nós.
+    </p>
+    <p class="msg-sign">— Com amor eterno, a sua família 🌸</p>
+  </div>
+</section>
+
+<!-- ═══════════ QR CODE ═══════════ -->
+<section class="qr-section">
+  <h2>Compartilhe esta homenagem</h2>
+  <p>Escaneie o QR Code para abrir este site</p>
+  <div id="qrcode"></div>
+</section>
+
+<footer>
+  Feito com ❤️ para a melhor mãe do mundo &nbsp;·&nbsp; 2025
+</footer>
+
+<script>
+  /* ─── PETALS ─── */
+  const container = document.getElementById('particles');
+  const colors = ['#c9a84c','#e8a0a0','#f5d9cc','#b07d5a','#e8c4b0'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left:${Math.random()*100}vw;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${6+Math.random()*8}s;
+      animation-delay:${Math.random()*10}s;
+      width:${6+Math.random()*10}px;
+      height:${6+Math.random()*10}px;
+      opacity:0;
+    `;
+    container.appendChild(p);
+  }
+
+  /* ─── PLAYER ─── */
+  const audio   = document.getElementById('audio');
+  const btn     = document.getElementById('playBtn');
+  const wave    = document.getElementById('waveform');
+  let playing   = false;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      btn.textContent = '▶';
+      wave.classList.add('paused');
+    } else {
+      audio.play().catch(()=>{});
+      btn.textContent = '⏸';
+      wave.classList.remove('paused');
+    }
+    playing = !playing;
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.textContent = '▶';
+    wave.classList.add('paused');
+    playing = false;
+  });
+
+  /* ─── QR CODE ─── */
+  const pageURL = window.location.href.split('?')[0];
+  new QRCode(document.getElementById('qrcode'), {
+    text: pageURL,
+    width: 200,
+    height: 200,
+    colorDark: '#2a1a0e',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+</body>
+</html>
